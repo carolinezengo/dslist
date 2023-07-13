@@ -4,6 +4,7 @@ import java.util.List;
 import com.devsupervisor.dslist.dto.GameDTO;
 import com.devsupervisor.dslist.dto.GameminDTO;
 import com.devsupervisor.dslist.entities.Game;
+import com.devsupervisor.dslist.projections.GameMinProjection;
 import com.devsupervisor.dslist.repositories.GameRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,15 @@ private GameRepository gameRepository;
 		List< GameminDTO > dto = result.stream().map(x -> new GameminDTO(x)).toList();
 		
 	return dto;
+	}
+	
+	@Transactional(readOnly = true)
+	
+	public List<GameminDTO> findByList(Long listId) 
+	{
+		List<GameMinProjection> result = gameRepository.searchByList(listId);
+		return result.stream().map(x -> new GameminDTO(x)).toList();
+
 	
 	}
 	
